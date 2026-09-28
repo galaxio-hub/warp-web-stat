@@ -1,0 +1,10 @@
+- name: warp-parse
+  addr:
+    path: ../warp-parse
+  model: arm-mac14-host
+  enable: true
+- name: warp-fusion
+  addr:
+    path: ../warp-fusion
+  model: arm-mac14-host
+  enable: true

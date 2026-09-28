@@ -1,0 +1,5 @@
+system:
+- name: sys_domain
+  value: http://test.galaxy.org/alpha
+- name: ART_CACHE_REPO
+  value: http://unknow.net

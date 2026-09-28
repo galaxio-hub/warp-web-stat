@@ -1,0 +1,15 @@
+# 系统 warp-engine 自己的业务 sink —— 集成时整份替换模块默认的 biz.toml
+[sink_group]
+name = "demo"
+oml = ["*"]
+tags = ["biz:demo", "sys:warp-engine"]
+batch_size = 2048
+batch_timeout_ms = 300
+
+[[sink_group.sinks]]
+name = "json"
+connect = "file_json_sink"
+tags = ["sink:json"]
+
+[sink_group.sinks.params]
+file = "demo_sys.json"

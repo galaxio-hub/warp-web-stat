@@ -1,0 +1,27 @@
+# ===== 运行时 / 构建产物 =====
+.report
+.run.gxl
+common
+artifacts
+*.gz
+*.tar.gz
+
+# ===== 本地化中间产物 =====
+**/local
+spec/mods
+sys/mods
+used.json
+used.yml
+_used.json
+_used.yml
+_value.yml
+
+# 值文件：忽略派生的值文件（sys_value.yml / <mod>/mod_value.yml / setting/...），
+# 但保留客户覆盖 values/value.yml（版本化）。
+values/*
+!values/value.yml
+
+# ===== 环境 =====
+# .env 由 gops sys localize 生成，含非密钥配置。
+# 密钥不落盘：compose 里用 ${SEC_xxx} 占位，运行时从 ~/.galaxy/sec_value.yml 注入。
+.env

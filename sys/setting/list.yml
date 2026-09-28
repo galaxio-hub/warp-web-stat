@@ -1,0 +1,5 @@
+warp-parse:
+  enable: true
+  localize:
+    src: ${GXL_PRJ_ROOT}/sys/setting/warp-parse
+    dst: ${GXL_PRJ_ROOT}/sys/mods/warp-parse/arm-mac14-host/local/
