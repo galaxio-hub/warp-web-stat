@@ -1,0 +1,26 @@
+use "nginx.wfs"
+
+// nginx access 日志按 HTTP 状态码分组统计（5s 固定桶）
+// 桶关闭时每 (桶 × 状态码) 输出一行：请求量 / 5xx 数 / 独立客户端数。
+rule nginx_status_stats {
+    events { c : nginx_access }
+    stats<5s:fixed> group by (c.http_status) {
+        c | count as total;
+        c | count as total_5xx where c.http_status == "500";
+        c | distinct_count(c.client_ip) as clients;
+    }
+    entity(digit, 1)
+    yield nginx_alerts (
+        alert_type = "nginx_status_stats",
+        http_status = c.http_status,
+        total = stat.value(final(total)),
+        total_5xx = stat.value(final(total_5xx)),
+        clients = stat.value(final(clients)),
+        detail = fmt("status={} total={} clients={} 5xx={}",
+            c.http_status,
+            stat.value(final(total)),
+            stat.value(final(clients)),
+            stat.value(final(total_5xx)))
+    )
+    limits { max_memory = "256MB" }
+}

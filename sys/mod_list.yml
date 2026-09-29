@@ -1,10 +1,12 @@
-- name: warp-parse
-  addr:
-    path: ../warp-parse
-  model: arm-mac14-host
-  enable: true
+# 顺序 = 启动顺序：warp-parse 的 Arrow sink 在启动时就要连 warp-fusion(9800)，
+# 连不上它会 exit 1，所以依赖方 warp-fusion 必须排在前面。
 - name: warp-fusion
   addr:
     path: ../warp-fusion
+  model: arm-mac14-host
+  enable: true
+- name: warp-parse
+  addr:
+    path: ../warp-parse
   model: arm-mac14-host
   enable: true

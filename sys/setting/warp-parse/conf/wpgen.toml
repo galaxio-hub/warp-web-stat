@@ -1,0 +1,25 @@
+version = "1.0"
+
+# warp-engine：把生成的数据直接灌进 warp-parse 的 tcp 源
+#   目标 = topology/sources/syslog_1.toml（tcp_src，127.0.0.1:6514，行分隔）
+# 用途：拉起一条实时链路，替代默认的「写 data/in_dat 文件 → file 源」：
+#   wpgen sample → TCP :6514 → wparse 解析 → Arrow :9800 → wfusion 统计 → 看板
+# 注意：单 [output]，此处整份替换模块默认的 file_json_sink 输出；
+#       parallel = 1，避免多连接打到 tcp 源的单实例。
+[generator]
+count = 1000
+speed = 1000
+parallel = 1
+
+[output]
+connect = "tcp_sink"
+
+[output.params]
+addr = "127.0.0.1"
+port = 6514
+framing = "line"
+
+[logging]
+level = "debug"
+output = "file"
+file_path = "./data/logs"

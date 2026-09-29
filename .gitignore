@@ -25,3 +25,9 @@ values/*
 # .env 由 gops sys localize 生成，含非密钥配置。
 # 密钥不落盘：compose 里用 ${SEC_xxx} 占位，运行时从 ~/.galaxy/sec_value.yml 注入。
 .env
+sys/arm-mac14-host/mods/
+
+# 模型级安装目录
+sys/*/bin
+# 迁移（gops >= 1.4）：模块按目标模型分组
+sys/*/mods

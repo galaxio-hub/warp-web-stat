@@ -7,7 +7,7 @@ batch_size = 2048
 batch_timeout_ms = 300
 
 [[sink_group.sinks]]
-name = "json"
+name = "sys-json"
 connect = "file_json_sink"
 tags = ["sink:json"]
 

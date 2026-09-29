@@ -1,0 +1,23 @@
+use "nginx.wfs"
+
+// nginx access 日志按来源 IP 分组统计（5s 固定桶）
+// 桶关闭时每 (桶 × client_ip) 输出一行：请求数 / 5xx 数 —— 供看板列独立 IP 明细。
+rule nginx_ip_stats {
+    events { c : nginx_access }
+    stats<5s:fixed> group by (c.client_ip) {
+        c | count as hits;
+        c | count as hit_5xx where c.http_status == "500";
+    }
+    entity(digit, 1)
+    yield nginx_alerts (
+        alert_type = "nginx_ip_stats",
+        client_ip = c.client_ip,
+        hits = stat.value(final(hits)),
+        hit_5xx = stat.value(final(hit_5xx)),
+        detail = fmt("ip={} hits={} 5xx={}",
+            c.client_ip,
+            stat.value(final(hits)),
+            stat.value(final(hit_5xx)))
+    )
+    limits { max_memory = "256MB" }
+}

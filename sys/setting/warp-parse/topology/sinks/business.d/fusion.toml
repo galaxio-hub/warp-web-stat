@@ -1,0 +1,18 @@
+# warp-engine：把 nginx 解析结果以 Arrow 送给 warp-fusion 做统计
+#
+# 帧 tag 隐式取自本模块的 OML name（"nginx"），
+# 与 warp-fusion 侧 models/schemas/nginx.wfs 的 stream_tag 对齐；
+# 目标地址 = warp-fusion 模块 topology/sources/ingress.toml 的监听地址。
+[sink_group]
+name = "fusion_out"
+oml = ["nginx"]
+
+[[sink_group.sinks]]
+name = "arrow_tcp_out"
+connect = "tcp_sink"
+
+[sink_group.sinks.params]
+protocol = "arrow"
+data_format = "arrow_framed"
+addr = "127.0.0.1"
+port = 9800

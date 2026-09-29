@@ -1,0 +1,43 @@
+// warp-engine：nginx access 事件窗
+//
+// 数据链路：warp-parse 解析 nginx access 日志 → Arrow(TCP, arrow_framed) → warp-fusion
+// 帧 tag 隐式为 warp-parse 侧的 OML name（本工程 = "nginx"），
+// 因此这里 stream_tag 必须等于 "nginx"（warp-parse 的 OML 名）。
+window nginx_access {
+    stream_tag = "nginx"
+    time = recv_time
+    over = 5m
+    fields {
+        client_ip: ip
+        recv_time: time
+        uri: chars
+        http_status: chars
+        bytes_sent: digit
+        referer: chars
+        user_agent: chars
+    }
+}
+
+// 统计/告警输出窗（over=0：只做输出通道，不保留时间窗）
+//
+// 同时给出「结构化字段」和「人读 detail」两种形态：
+//   - 结构化字段（http_status / total / total_5xx / clients / client_ip / hits / hit_5xx / uri）
+//     供看板/下游直接消费，避免解析文字；
+//   - detail 供人直接阅读（日志、grep）。
+// 各规则只填自己相关的字段，无关字段留空。
+// 聚合值来自 stat.value()，类型为 float，故此处用 float 而非 digit。
+window nginx_alerts {
+    over = 0
+    fields {
+        alert_type: chars
+        detail: chars
+        http_status: chars
+        uri: chars
+        client_ip: ip
+        total: float
+        total_5xx: float
+        clients: float
+        hits: float
+        hit_5xx: float
+    }
+}
