@@ -1,3 +1,5 @@
+# 仓库级唯一 .gitignore（子目录不再单独放 .gitignore，统一在这里维护）。
+
 # ===== 运行时 / 构建产物 =====
 .report
 .run.gxl
