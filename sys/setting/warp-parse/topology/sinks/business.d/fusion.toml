@@ -1,4 +1,4 @@
-# warp-engine：把 nginx 解析结果以 Arrow 送给 warp-fusion 做统计
+# web-stats：把 nginx 解析结果以 Arrow 送给 warp-fusion 做统计
 #
 # 帧 tag 隐式取自本模块的 OML name（"nginx"），
 # 与 warp-fusion 侧 models/schemas/nginx.wfs 的 stream_tag 对齐；

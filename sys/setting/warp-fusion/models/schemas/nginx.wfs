@@ -1,4 +1,4 @@
-// warp-engine：nginx access 事件窗
+// web-stats：nginx access 事件窗
 //
 // 数据链路：warp-parse 解析 nginx access 日志 → Arrow(TCP, arrow_framed) → warp-fusion
 // 帧 tag 隐式为 warp-parse 侧的 OML name（本工程 = "nginx"），

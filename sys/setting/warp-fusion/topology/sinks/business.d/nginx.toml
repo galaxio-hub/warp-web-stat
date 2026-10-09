@@ -1,4 +1,4 @@
-# warp-engine：nginx 统计/告警输出
+# web-stats：nginx 统计/告警输出
 # 命中输出窗 nginx_alerts（统计行与 5xx 突发告警都在其中，用 alert_type 区分）
 [sink_group]
 name = "nginx_out"

@@ -1,4 +1,4 @@
-# warp-engine 系统接管 warp-fusion 的窗口注册表（windows.toml 只能整份替换）。
+# web-stats 系统接管 warp-fusion 的窗口注册表（windows.toml 只能整份替换）。
 # 前半段 = 模块（wf-rules）原有窗口，须与 warp-fusion 模块 spec 保持同步；
 # 末段 = 本系统新增的 nginx 统计窗口。
 [window_defaults]
@@ -82,7 +82,7 @@ mode = "local"
 max_window_bytes = "64MB"
 over_cap = "10m"
 
-# ---- warp-engine：nginx 统计窗口 ----
+# ---- web-stats：nginx 统计窗口 ----
 [window.nginx_access]
 mode = "local"
 max_window_bytes = "64MB"
